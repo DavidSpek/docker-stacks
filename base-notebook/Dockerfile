@@ -4,7 +4,7 @@
 # Ubuntu 20.04 (focal)
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 # OS/ARCH: linux/amd64
-ARG ROOT_CONTAINER=nvidia/cuda:11.1-base-ubuntu20.04@sha256:6007208f8a1f626c0175260ebd46b1cbde10aab67e6d810fa593357b8199bfbe
+ARG ROOT_CONTAINER=nvidia/cuda:11.1-base-ubuntu18.04
 
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
@@ -66,7 +66,7 @@ RUN apt-get update \
     libcusolver-${CUDA/./-} \
     libcusparse-${CUDA/./-} \
     curl \
-    libcudnn8 \
+    libcudnn8=${CUDNN}+cuda${CUDA} \
     libfreetype6-dev \
     libhdf5-serial-dev \
     libzmq3-dev \
