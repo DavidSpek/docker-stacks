@@ -4,7 +4,7 @@
 # Ubuntu 20.04 (focal)
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 # OS/ARCH: linux/amd64
-ARG ROOT_CONTAINER=ubuntu:focal-20201106@sha256:4e4bc990609ed865e07afc8427c30ffdddca5153fd4e82c20d8f0783a291e241
+ARG ROOT_CONTAINER=nvidia/cuda:11.1-base-ubuntu20.04@sha256:6007208f8a1f626c0175260ebd46b1cbde10aab67e6d810fa593357b8199bfbe
 
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
@@ -13,6 +13,12 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
+ARG CUDA=11.0
+ARG CUDNN=8.0.4.30-1
+ARG CUDNN_MAJOR_VERSION=8
+ARG LIB_DIR_PREFIX=x86_64
+ARG LIBNVINFER=7.1.3-1
+ARG LIBNVINFER_MAJOR_VERSION=7
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -51,6 +57,26 @@ RUN apt-get update \
     locales \
     fonts-liberation \
     run-one \
+    build-essential \
+    cuda-command-line-tools-${CUDA/./-} \
+    libcublas-${CUDA/./-} \
+    cuda-nvrtc-${CUDA/./-} \
+    libcufft-${CUDA/./-} \
+    libcurand-${CUDA/./-} \
+    libcusolver-${CUDA/./-} \
+    libcusparse-${CUDA/./-} \
+    curl \
+    libcudnn8=${CUDNN}+cuda${CUDA} \
+    libfreetype6-dev \
+    libhdf5-serial-dev \
+    libzmq3-dev \
+    pkg-config \
+    software-properties-common \
+    unzip \
+    ffmpeg dvipng \
+    cm-super \
+    libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda${CUDA} \
+    libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda${CUDA} \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
