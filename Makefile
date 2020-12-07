@@ -5,7 +5,7 @@
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
 ARCH:=$(shell uname -m)
-OWNER?=jupyter
+OWNER?=davidspek
 
 # Need to list the images in build dependency order
 ifeq ($(ARCH),ppc64le)
@@ -29,7 +29,7 @@ HADOLINT_VERSION="v1.19.0"
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
-	@echo "jupyter/docker-stacks"
+	@echo "davidspek/docker-stacks"
 	@echo "====================="
 	@echo "Replace % with a stack directory name (e.g., make build/minimal-notebook)"
 	@echo
@@ -81,7 +81,7 @@ docs: ## build HTML documentation
 
 git-commit: LOCAL_PATH?=.
 git-commit: GITHUB_SHA?=$(shell git rev-parse HEAD)
-git-commit: GITHUB_REPOSITORY?=jupyter/docker-stacks
+git-commit: GITHUB_REPOSITORY?=davidspek/docker-stacks
 git-commit: GITHUB_TOKEN?=
 git-commit: ## commit outstading git changes and push to remote
 	@git config --global user.name "GitHub Actions"
