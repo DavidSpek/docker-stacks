@@ -66,7 +66,7 @@ RUN apt-get update \
     libcusolver-${CUDA/./-} \
     libcusparse-${CUDA/./-} \
     curl \
-    libcudnn8=${CUDNN}+cuda${CUDA} \
+    libcudnn8 \
     libfreetype6-dev \
     libhdf5-serial-dev \
     libzmq3-dev \
