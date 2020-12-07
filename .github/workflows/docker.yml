@@ -9,7 +9,7 @@ on:
       - "examples/**"
   push:
     branches:
-      - master
+      - gpu
     paths-ignore:
       - "*.md"
       - "binder/**"
@@ -53,17 +53,17 @@ jobs:
           COMMIT_MSG: "${{github.event.head_commit.message}}"
           WIKI_PATH: ../wiki
       - name: Login to Docker Hub
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/gpu'
         run: >
           echo '${{secrets.DOCKERHUB_PASSWORD}}' | docker login --username
           '${{secrets.DOCKERHUB_USERNAME}}' --password-stdin
       - name: Push Images to DockerHub
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/gpu'
         run: make -C main push-all
       - name: Push Wiki to GitHub
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/gpu'
         # Pass GITHUB_REPOSITORY directly to avoid conflict with GitHub Actions built-in env var
         run: make -C main git-commit GITHUB_REPOSITORY='${{ github.repository }}.wiki'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
           LOCAL_PATH: ../wiki
