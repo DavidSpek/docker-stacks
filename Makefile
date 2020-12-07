@@ -13,12 +13,12 @@ ALL_STACKS:=base-notebook
 else
 ALL_STACKS:=base-notebook \
 	minimal-notebook \
-	r-notebook \
+#	r-notebook \
 	scipy-notebook \
 	tensorflow-notebook \
-	datascience-notebook \
-	pyspark-notebook \
-	all-spark-notebook
+#	datascience-notebook \
+#	pyspark-notebook \
+#	all-spark-notebook
 endif
 
 ALL_IMAGES:=$(ALL_STACKS)
